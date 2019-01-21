@@ -1,0 +1,11 @@
+{
+  "name": "od-server",
+  "version": "1.0.0",
+  "description": "lite server for localhost development",
+  "main": "main.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
