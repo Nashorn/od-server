@@ -128,7 +128,7 @@ portfinder.getPort(function (err, port) {
           response.end();
         }
       })*/
-    }).listen($PORT||port);
+    }).listen(process.env.PORT||port);
 
 
     console.log("Server Running, Port: " + port);
