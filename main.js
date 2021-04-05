@@ -54,7 +54,9 @@ portfinder.getPort(function (err, port) {
         //  WITHOUT GZIP
     http.createServer(certOptions,function(request, response){
       var filePath = '.' + request.url;
-      console.log("request.url",request.url)
+          
+
+      console.log("filePath",filePath)
       if (filePath == './') {
           filePath = './index.html';
       }
@@ -62,11 +64,21 @@ portfinder.getPort(function (err, port) {
         filePath += '/index.html';
       }
       filePath=path.resolve(filePath);
+      filePath = filePath.split("?")[0]
+
       if (!fs.existsSync(filePath)) {
-        response.writeHead(301, {
-          'Content-type':'text/html',
-          'Location': '/'
-        });
+        if(filePath.includes("resources")){
+          response.writeHead(301, {
+            'Content-type':'text/html',
+            'Location': '/resources/index.html'
+          });
+        }
+        else{
+          response.writeHead(301, {
+            'Content-type':'text/html',
+            'Location': '/'
+          });
+        }
         // response.write('Page Was Not Found');
         response.end();
         // fs.readFile("./index.html", function(err, data){
@@ -88,8 +100,16 @@ portfinder.getPort(function (err, port) {
         });
 
         readStream.on('error', function(err) {
-          response.writeHead(404, {'Content-type':'text/plan'});
-          response.write('Resource Not Found: ' + filePath);
+          if(filePath.includes("resources")){
+            response.writeHead(301, {
+              'Content-type':'text/html',
+              'Location': '/resources/index.html' + request.querystring
+            });
+          }
+          else {
+            response.writeHead(404, {'Content-type':'text/plan'});
+            response.write('Resource Not Found: ' + filePath);
+          }
           response.end();
         });
       /*fs.readFile(filePath, function(err, data){
@@ -108,7 +128,7 @@ portfinder.getPort(function (err, port) {
           response.end();
         }
       })*/
-    }).listen(port);
+    }).listen($PORT||port);
 
 
     console.log("Server Running, Port: " + port);
