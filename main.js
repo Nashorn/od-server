@@ -67,7 +67,13 @@ portfinder.getPort(function (err, port) {
       filePath = filePath.split("?")[0]
 
       if (!fs.existsSync(filePath)) {
-        if(filePath.includes("resources")){
+        if(filePath.includes("ld.json")){
+          response.writeHead(302, {//temporarily use /docs/topics/ld.json
+            'Content-type':'text/plain',
+            'Location': '/resources/docs/topics/ld.json'
+          });
+        }
+        else if(filePath.includes("resources")){
           response.writeHead(301, {
             'Content-type':'text/html',
             'Location': '/resources/index.html'
@@ -128,7 +134,7 @@ portfinder.getPort(function (err, port) {
           response.end();
         }
       })*/
-    }).listen(process.env.PORT||port);
+    }).listen(port);
 
 
     console.log("Server Running, Port: " + port);
