@@ -68,7 +68,7 @@ portfinder.getPort(function (err, port) {
 
       if (!fs.existsSync(filePath)) {
         if(filePath.includes("ld.json")){
-          response.writeHead(302, {//temporarily use /docs/topics/ld.json
+          response.writeHead(301, {//temporarily use /docs/topics/ld.json
             'Content-type':'text/plain',
             'Location': '/resources/docs/topics/ld.json'
           });
